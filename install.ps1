@@ -26,7 +26,7 @@ try {
     $MetadataText = [System.IO.File]::ReadAllText($PetJson, [System.Text.Encoding]::UTF8)
     $Metadata = $MetadataText | ConvertFrom-Json
     if ($Metadata.id -ne 'aquabox' -or $Metadata.spriteVersionNumber -ne 2) {
-        throw 'Downloaded pet.json is not the expected AquaBox v2 pet.'
+        throw 'Downloaded pet.json is not the expected Huashi Weilai v2 pet.'
     }
 
     $Bytes = [System.IO.File]::ReadAllBytes($SpriteSheet)
@@ -40,7 +40,7 @@ try {
     Copy-Item -LiteralPath $PetJson -Destination (Join-Path $TargetDir 'pet.json') -Force
     Copy-Item -LiteralPath $SpriteSheet -Destination (Join-Path $TargetDir 'spritesheet.webp') -Force
 
-    Write-Host "Installed AquaBox to $TargetDir"
+    Write-Host "Installed Huashi Weilai to $TargetDir"
     Write-Host 'Fully quit and reopen Codex, then use Settings > Pets > Refresh.'
 }
 finally {

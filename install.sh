@@ -20,7 +20,7 @@ curl -fsSL --retry 2 "$RAW_BASE/pet.json" -o "$TEMP_DIR/pet.json"
 curl -fsSL --retry 2 "$RAW_BASE/spritesheet.webp" -o "$TEMP_DIR/spritesheet.webp"
 
 grep -q '"id"[[:space:]]*:[[:space:]]*"aquabox"' "$TEMP_DIR/pet.json" || {
-  printf '%s\n' 'Downloaded pet.json is not AquaBox.' >&2
+  printf '%s\n' 'Downloaded pet.json is not Huashi Weilai.' >&2
   exit 1
 }
 grep -q '"spriteVersionNumber"[[:space:]]*:[[:space:]]*2' "$TEMP_DIR/pet.json" || {
@@ -37,5 +37,5 @@ mkdir -p "$TARGET_DIR"
 cp "$TEMP_DIR/pet.json" "$TARGET_DIR/pet.json"
 cp "$TEMP_DIR/spritesheet.webp" "$TARGET_DIR/spritesheet.webp"
 
-printf 'Installed 青盒姬 to %s\n' "$TARGET_DIR"
+printf 'Installed 华世未来 to %s\n' "$TARGET_DIR"
 printf '%s\n' 'Fully quit and reopen Codex, then use Settings > Pets > Refresh.'
