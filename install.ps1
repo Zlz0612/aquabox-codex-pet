@@ -21,7 +21,10 @@ try {
     Invoke-WebRequest -Uri "$RawBase/pet.json" -OutFile $PetJson
     Invoke-WebRequest -Uri "$RawBase/spritesheet.webp" -OutFile $SpriteSheet
 
-    $Metadata = Get-Content -Raw $PetJson | ConvertFrom-Json
+    # Windows PowerShell 5.1 otherwise reads UTF-8-without-BOM JSON using the
+    # active ANSI code page, which corrupts the Chinese metadata.
+    $MetadataText = [System.IO.File]::ReadAllText($PetJson, [System.Text.Encoding]::UTF8)
+    $Metadata = $MetadataText | ConvertFrom-Json
     if ($Metadata.id -ne 'aquabox' -or $Metadata.spriteVersionNumber -ne 2) {
         throw 'Downloaded pet.json is not the expected AquaBox v2 pet.'
     }
@@ -37,7 +40,7 @@ try {
     Copy-Item -LiteralPath $PetJson -Destination (Join-Path $TargetDir 'pet.json') -Force
     Copy-Item -LiteralPath $SpriteSheet -Destination (Join-Path $TargetDir 'spritesheet.webp') -Force
 
-    Write-Host "Installed 青盒姬 to $TargetDir"
+    Write-Host "Installed AquaBox to $TargetDir"
     Write-Host 'Fully quit and reopen Codex, then use Settings > Pets > Refresh.'
 }
 finally {
